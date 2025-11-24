@@ -25,18 +25,18 @@ function App() {
 
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
-  // random img
+  // random img effect
   const handleClick = (e) => {
     const randomImage = clickImages[Math.floor(Math.random() * clickImages.length)];
     const id = Date.now();
 
-    // new random img
-    setClickEffects((prev) => [...prev, {id, src: randomImage, x: e.clientX, y: e.clientY, opacity: 1}]);
+    // new random img effect
+    setClickEffects((prev) => [...prev, { id, src: randomImage, x: e.clientX, y: e.clientY, opacity: 1 }]);
 
     // fade after 0.25 sec
     setTimeout(() => {
       setClickEffects((prev) =>
-        prev.map((effect) => (effect.id === id ? {...effect, opacity: 0} : effect))
+        prev.map((effect) => (effect.id === id ? { ...effect, opacity: 0 } : effect))
       );
     }, 250);
 
@@ -45,8 +45,8 @@ function App() {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
     }, 1000);
 
-    // play music on first tap for mobile
-    if (isMobile && !musicStartedRef.current && e.target.tagName === 'IMG') {
+    // play music on first tap on large card image for mobile
+    if (isMobile && !musicStartedRef.current && e.target.id === 'large-card-img') {
       audioRef.current.play().catch(() => {});
       musicStartedRef.current = true;
     }
@@ -63,7 +63,7 @@ function App() {
   return (
     <div
       onPointerDown={handleClick} // handles both click and touch
-      style={{position:'relative', minHeight:'100vh', width:'100%', cursor:'pointer', backgroundColor:'rgb(252,214,243)'}}
+      style={{ position: 'relative', minHeight: '100vh', width: '100%', cursor: 'pointer', backgroundColor: 'rgb(252,214,243)' }}
     >
       {/* bg music */}
       <audio ref={audioRef} src={music1} loop preload="auto" />
@@ -74,19 +74,20 @@ function App() {
           key={effect.id}
           src={effect.src}
           alt="click effect"
-          style={{position:'absolute', top:effect.y-50, left:effect.x-50, width:100, height:100, pointerEvents:'none', opacity:effect.opacity, transition:'opacity 0.5s ease-in-out', zIndex:9999}}
+          style={{ position: 'absolute', top: effect.y - 50, left: effect.x - 50, width: 100, height: 100, pointerEvents: 'none', opacity: effect.opacity, transition: 'opacity 0.5s ease-in-out', zIndex: 9999 }}
         />
       ))}
 
       <title>Congrats</title>
 
-      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100" style={{gap:'2rem', paddingTop:'20px'}}>
-        <div className="card mb-3 custom-card-border" style={{maxWidth:'800px', marginLeft:'10px', marginRight:'10px'}}>
+      <div className="d-flex flex-column align-items-center justify-content-center min-vh-100" style={{ gap: '2rem', paddingTop: '20px' }}>
+        <div className="card mb-3 custom-card-border" style={{ maxWidth: '800px', marginLeft: '10px', marginRight: '10px' }}>
           <div className="row g-0">
             <div className="col-md-4">
               <img
                 src={alvissa2}
-                style={{borderColor:'#636363', borderWidth:'1px', borderStyle:'solid'}}
+                id="large-card-img" // important for mobile tap detection
+                style={{ borderColor: '#636363', borderWidth: '1px', borderStyle: 'solid' }}
                 className="img-fluid rounded"
                 alt="alvissa2"
               />
@@ -96,7 +97,7 @@ function App() {
               <div className="card-body h-100 rounded">
                 <div className="card-header custom-card-border">
                   <h3 className="card-title"><strong>Congratulations</strong></h3>
-                  <h6 className="card-title" style={{paddingLeft:'2px'}}>Alvissa T. Caballa, RN</h6>
+                  <h6 className="card-title" style={{ paddingLeft: '2px' }}>Alvissa T. Caballa, RN</h6>
                 </div>
 
                 <p className="card-text mt-0">
