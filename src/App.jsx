@@ -45,13 +45,29 @@ function App() {
 
   // autoplay bg music
   useEffect(() => {
-    audioRef.current?.play().catch(() => {
-      const startAudio = () => {
-        audioRef.current?.play();
-        window.removeEventListener('pointerdown', startAudio);
-      };
-      window.addEventListener('pointerdown', startAudio);
-    });
+    // start muted to allow autoplay on mobile
+    if (audioRef.current) {
+      audioRef.current.volume = 0;
+      audioRef.current.play().catch(() => {});
+    }
+
+    const startAudio = () => {
+      if (audioRef.current) {
+        audioRef.current.volume = 1; // unmute
+        audioRef.current.play();
+      }
+      window.removeEventListener('pointerdown', startAudio);
+      window.removeEventListener('touchstart', startAudio);
+    };
+
+    // start music on first interaction if autoplay blocked
+    window.addEventListener('pointerdown', startAudio);
+    window.addEventListener('touchstart', startAudio);
+
+    return () => {
+      window.removeEventListener('pointerdown', startAudio);
+      window.removeEventListener('touchstart', startAudio);
+    };
   }, []);
 
   return (
@@ -94,7 +110,7 @@ function App() {
         <div className="card mb-3 custom-card-border" style={{ maxWidth: '800px', marginLeft: '10px', marginRight: '10px' }}>
           <div className="row g-0">
             <div className="col-md-4">
-              <img src={alvissa2} style={{ borderColor: '#636363', borderWidth: '1px', borderStyle: 'solid' }} className="img-fluid rounded-start" alt="alvissa2" />
+              <img src={alvissa2} style={{ borderColor: '#636363', borderWidth: '1px', borderStyle: 'solid' }} className="img-fluid rounded" alt="alvissa2" />
             </div>
 
             <div className="col-md-8">
