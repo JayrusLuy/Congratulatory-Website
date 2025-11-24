@@ -21,6 +21,7 @@ function App() {
   const clickImages = [click1, click2, click3, click4, click5, click6, click7, click8, click9, click10, click11];
   const [clickEffects, setClickEffects] = useState([]);
   const audioRef = useRef(null);
+  const musicStartedRef = useRef(false);
 
   // random img
   const handleClick = (e) => {
@@ -41,38 +42,26 @@ function App() {
     setTimeout(() => {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
     }, 1000);
+
+    // play music on first tap for mobile
+    if (!musicStartedRef.current && audioRef.current) {
+      audioRef.current.volume = 1;
+      audioRef.current.play().catch(() => {});
+      musicStartedRef.current = true;
+    }
   };
 
-  // autoplay bg music
+  // autoplay bg music (start muted for mobile autoplay)
   useEffect(() => {
-    // start muted to allow autoplay on mobile
     if (audioRef.current) {
-      audioRef.current.volume = 0;
+      audioRef.current.volume = 0; // start muted
       audioRef.current.play().catch(() => {});
     }
-
-    const startAudio = () => {
-      if (audioRef.current) {
-        audioRef.current.volume = 1; // unmute
-        audioRef.current.play();
-      }
-      window.removeEventListener('pointerdown', startAudio);
-      window.removeEventListener('touchstart', startAudio);
-    };
-
-    // start music on first interaction if autoplay blocked
-    window.addEventListener('pointerdown', startAudio);
-    window.addEventListener('touchstart', startAudio);
-
-    return () => {
-      window.removeEventListener('pointerdown', startAudio);
-      window.removeEventListener('touchstart', startAudio);
-    };
   }, []);
 
   return (
     <div
-      onPointerDown={handleClick}
+      onPointerDown={handleClick} // handles both click and touch
       style={{
         position: 'relative',
         minHeight: '100vh',
