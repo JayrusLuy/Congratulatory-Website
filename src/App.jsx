@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import alvissa1 from './assets/pfp/alvissa1.jpg';
 import alvissa2 from './assets/pfp/alvissa2.jpg';
@@ -23,6 +23,8 @@ function App() {
   const audioRef = useRef(null);
   const musicStartedRef = useRef(false);
 
+  const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+
   // random img
   const handleClick = (e) => {
     const randomImage = clickImages[Math.floor(Math.random() * clickImages.length)];
@@ -43,12 +45,20 @@ function App() {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
     }, 1000);
 
-    // play music on first tap
-    if (!musicStartedRef.current && audioRef.current) {
+    // play music on first tap for mobile
+    if (isMobile && !musicStartedRef.current && e.target.tagName === 'IMG') {
       audioRef.current.play().catch(() => {});
       musicStartedRef.current = true;
     }
   };
+
+  // autoplay bg music on desktop
+  useEffect(() => {
+    if (!isMobile && audioRef.current) {
+      audioRef.current.play().catch(() => {});
+      musicStartedRef.current = true;
+    }
+  }, [isMobile]);
 
   return (
     <div
@@ -56,7 +66,7 @@ function App() {
       style={{position:'relative', minHeight:'100vh', width:'100%', cursor:'pointer', backgroundColor:'rgb(252,214,243)'}}
     >
       {/* bg music */}
-      <audio ref={audioRef} src={music1} loop />
+      <audio ref={audioRef} src={music1} loop preload="auto" />
 
       {/* click effect */}
       {clickEffects.map((effect) => (
@@ -74,7 +84,12 @@ function App() {
         <div className="card mb-3 custom-card-border" style={{maxWidth:'800px', marginLeft:'10px', marginRight:'10px'}}>
           <div className="row g-0">
             <div className="col-md-4">
-              <img src={alvissa2} style={{borderColor:'#636363', borderWidth:'1px', borderStyle:'solid'}} className="img-fluid rounded" alt="alvissa2" />
+              <img
+                src={alvissa2}
+                style={{borderColor:'#636363', borderWidth:'1px', borderStyle:'solid'}}
+                className="img-fluid rounded"
+                alt="alvissa2"
+              />
             </div>
 
             <div className="col-md-8">
