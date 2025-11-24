@@ -1,0 +1,18 @@
+html, body {
+  font-family: sans-serif;
+  width: 100%;
+  background-color: rgb(252, 214, 243);
+}
+
+.custom-card-border {
+  border-color: #636363 !important;
+}
+
+.fade-image {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-image[src] {
+  opacity: 1;
+}
