@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import alvissa1 from './assets/pfp/alvissa1.jpg';
 import alvissa2 from './assets/pfp/alvissa2.jpg';
@@ -19,34 +19,44 @@ import music1 from './assets/music/music1.m4a';
 
 function App() {
   const clickImages = [click1, click2, click3, click4, click5, click6, click7, click8, click9, click10, click11];
-
   const [clickEffects, setClickEffects] = useState([]);
+  const audioRef = useRef(null);
 
-  // random click image
+  // random img
   const handleClick = (e) => {
     const randomImage = clickImages[Math.floor(Math.random() * clickImages.length)];
     const id = Date.now();
 
-    // new click image
+    // new random img
     setClickEffects((prev) => [...prev, { id, src: randomImage, x: e.clientX, y: e.clientY, opacity: 1 }]);
 
-    // fade after .25 sec
+    // fade after 0.25 sec
     setTimeout(() => {
       setClickEffects((prev) =>
         prev.map((effect) => (effect.id === id ? { ...effect, opacity: 0 } : effect))
       );
     }, 250);
 
-    // remove img after .5 sec
+    // remove img after 1 sec
     setTimeout(() => {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
-    }, 500);
+    }, 1000);
   };
+
+  // autoplay bg music
+  useEffect(() => {
+    audioRef.current?.play().catch(() => {
+      const startAudio = () => {
+        audioRef.current?.play();
+        window.removeEventListener('pointerdown', startAudio);
+      };
+      window.addEventListener('pointerdown', startAudio);
+    });
+  }, []);
 
   return (
     <div
-      onClick={handleClick}
-      onTouchStart={handleClick}
+      onPointerDown={handleClick}
       style={{
         position: 'relative',
         minHeight: '100vh',
@@ -55,6 +65,9 @@ function App() {
         backgroundColor: 'rgb(252, 214, 243)',
       }}
     >
+      {/* bg music */}
+      <audio ref={audioRef} src={music1} loop />
+
       {/* click effect */}
       {clickEffects.map((effect) => (
         <img
@@ -75,9 +88,6 @@ function App() {
         />
       ))}
 
-      {/* background music */}
-      <audio src={music1} autoPlay loop />
-
       <title>Congrats</title>
 
       <div className="d-flex flex-column align-items-center justify-content-center min-vh-100" style={{ gap: '2rem', paddingTop: '20px' }}>
@@ -89,7 +99,6 @@ function App() {
 
             <div className="col-md-8">
               <div className="card-body h-100 rounded" style={{ backgroundColor: 'rgba(253, 229, 248)' }}>
-
                 <div className="card-header custom-card-border">
                   <h3 className="card-title"><strong>Congratulations</strong></h3>
                   <h6 className="card-title" style={{ paddingLeft: '2px' }}>Alvissa T. Caballa, RN</h6>
@@ -107,7 +116,6 @@ function App() {
                     November 26 2025
                   </small>
                 </p>
-
               </div>
             </div>
           </div>
