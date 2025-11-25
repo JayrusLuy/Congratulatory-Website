@@ -14,11 +14,39 @@ import click8 from './assets/click/click8.png';
 import click9 from './assets/click/click9.png';
 import click10 from './assets/click/click10.png';
 import click11 from './assets/click/click11.png';
+import click12 from './assets/click/click12.png';
+import click13 from './assets/click/click13.png';
+import click14 from './assets/click/click14.png';
+import click15 from './assets/click/click15.png';
+import click16 from './assets/click/click16.png';
+import click17 from './assets/click/click17.png';
+import click18 from './assets/click/click18.png';
+import click19 from './assets/click/click19.png';
+import click20 from './assets/click/click20.png';
+import click21 from './assets/click/click21.png';
+import click22 from './assets/click/click22.png';
+import click23 from './assets/click/click23.png';
+import click24 from './assets/click/click24.png';
+import click25 from './assets/click/click25.png';
+import click26 from './assets/click/click26.png';
+import click27 from './assets/click/click27.png';
+import click28 from './assets/click/click28.png';
+import click29 from './assets/click/click29.png';
+import click30 from './assets/click/click30.png';
+import click31 from './assets/click/click31.png';
+import click32 from './assets/click/click32.png';
+import click33 from './assets/click/click33.png';
+import click34 from './assets/click/click34.png';
+import click35 from './assets/click/click35.png';
+import click36 from './assets/click/click36.png';
 
 import music1 from './assets/music/music1.m4a';
 
 function App() {
-  const clickImages = [click1, click2, click3, click4, click5, click6, click7, click8, click9, click10, click11];
+  const clickImages = [click1, click2, click3, click4, click5, click6, click7, click8, click9, click10, 
+                      click11, click12, click13, click14, click15, click16, click17, click18, click19, click20,
+                      click21, click22, click23, click24, click25, click26, click27, click28, click29, click30,
+                      click31, click32, click33, click34, click35, click36];
   const [clickEffects, setClickEffects] = useState([]);
   const [showMobileModal, setShowMobileModal] = useState(false);
   const audioRef = useRef(null);
