@@ -91,12 +91,49 @@ function App() {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
     }, 1000);
 
-    // mobile start on tap of big image (fallback)
-    if (isMobile && !musicStartedRef.current && e.target.id === 'large-card-img') {
-      audioRef.current?.play().catch(() => {});
-      musicStartedRef.current = true;
-    }
-  };
+  // pause or resume music if website visible or not
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!audioRef.current) return;
+
+      if (document.hidden) {
+        // site hidden pause
+        audioRef.current.pause();
+        musicStartedRef.current = false;
+      } else {
+        // site visible play
+        if (!musicStartedRef.current) {
+          audioRef.current.play().catch(() => {});
+          musicStartedRef.current = true;
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
+
+  // fallback for site visibility 
+  useEffect(() => {
+    const handlePageHide = () => audioRef.current?.pause();
+    const handlePageShow = () => {
+      if (!musicStartedRef.current) {
+        audioRef.current?.play().catch(() => {});
+        musicStartedRef.current = true;
+      }
+    };
+
+    window.addEventListener('pagehide', handlePageHide);
+    window.addEventListener('pageshow', handlePageShow);
+
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, []);
 
   return (
     <div
