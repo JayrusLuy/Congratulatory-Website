@@ -79,12 +79,14 @@ function App() {
 
     setClickEffects((prev) => [...prev, { id, src: randomImage, x: e.clientX, y: e.clientY, opacity: 1 }]);
 
+    // fade out at 0.5 sec
     setTimeout(() => {
       setClickEffects((prev) =>
         prev.map((effect) => (effect.id === id ? { ...effect, opacity: 0 } : effect))
       );
-    }, 250);
-
+    }, 500);
+    
+    // remove at 1 sec
     setTimeout(() => {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
     }, 1000);
