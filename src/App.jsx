@@ -181,11 +181,11 @@ function App() {
             <div className="col-md-8">
               <div className="card-body h-100 rounded">
                 <div className="card-header custom-card-border">
-                  <h3 className="card-title"><strong>Congratulations</strong></h3>
-                  <h6 className="card-title" style={{ paddingLeft: '2px' }}>Alvissa T. Caballa, RN</h6>
+                  <h3 className="card-title" style={{userSelect: 'none'}}><strong>Congratulations</strong></h3>
+                  <h6 className="card-title" style={{ paddingLeft: '2px', userSelect: 'none'}}>Alvissa T. Caballa, RN</h6>
                 </div>
 
-                <p className="card-text mt-0">
+                <p className="card-text mt-0" style={{userSelect: 'none'}}>
                   I always knew you could do it!
                   I am so happy to see you pass your board exams and become a Registered Nurse.
                   All the stress and sleepless nights you endured was worth it. Your hard work had truly paid off.
@@ -193,7 +193,7 @@ function App() {
                 </p>
 
                 <p className="card-text">
-                  <small className="text-body-secondary">November 26 2025</small>
+                  <small className="text-body-secondary" style={{userSelect: 'none'}}>November 26 2025</small>
                 </p>
 
               </div>
