@@ -106,7 +106,12 @@ function App() {
         minHeight: '100vh',
         width: '100%',
         cursor: 'pointer',
-        backgroundColor: 'rgb(252,214,243)'
+        backgroundColor: 'rgb(252,214,243)',
+        ...(isMobile && {
+          WebkitTouchCallout: 'none',
+          WebkitUserSelect: 'none',
+          userSelect: 'none'
+        })
       }}
     >
       <audio ref={audioRef} src={music1} loop preload="auto" />
