@@ -90,6 +90,7 @@ function App() {
     setTimeout(() => {
       setClickEffects((prev) => prev.filter((effect) => effect.id !== id));
     }, 1000);
+  };
 
   // pause or resume music if website visible or not
   useEffect(() => {
