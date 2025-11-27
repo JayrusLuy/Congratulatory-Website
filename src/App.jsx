@@ -236,7 +236,7 @@ function App() {
                 </p>
 
                 <p className="card-text">
-                  <small className="text-body-secondary" style={{userSelect: 'none'}}>November 27 2025</small>
+                  <small className="text-body-secondary" style={{userSelect: 'none'}}>November 27 2025 | Hi tita</small>
                 </p>
 
               </div>
