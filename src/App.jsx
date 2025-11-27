@@ -154,7 +154,7 @@ function App() {
     >
       <audio ref={audioRef} src={music1} loop preload="auto" />
 
-      {/* Mobile modal */}
+      {/* mobile modal */}
       {showMobileModal && (
         <div
           className="modal fade show"
@@ -236,7 +236,7 @@ function App() {
                 </p>
 
                 <p className="card-text">
-                  <small className="text-body-secondary" style={{userSelect: 'none'}}>November 26 2025</small>
+                  <small className="text-body-secondary" style={{userSelect: 'none'}}>November 27 2025</small>
                 </p>
 
               </div>
